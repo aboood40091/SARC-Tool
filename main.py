@@ -69,7 +69,7 @@ def pack(root, endianness, padding, outname):
 def printInfo():
     print("")
     print("Usage:")
-    print("  sarc_pack [option...] folder")
+    print("  main [option...] folder")
     print("")
     print("Options:")
     print(" -o <output>     output file (Optional)")
