@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # SARC Packer
-# Version v0.1
+# Version v0.2
 # Copyright © 2017 Stella/AboodXD
 
 import os
@@ -15,16 +15,30 @@ def pack(root, endianness, padding, outname):
     """
     Pack the files and folders in the root folder.
     """
+
+    if "\\" in root:
+        if root.endswith("\\"):
+            root = root[:-2]
+        root = "/".join(root.split("\\"))
+    elif root.endswith("/"):
+        root = root[:-1]
     
     arc = SARC.SARC_Archive(endianness=endianness)
+
+    lenroot = len(root.split("/"))
 
     print("")
     
     for path, dirs, files in os.walk(root):
         if "\\" in path:
-            path = "/".join(path.split("\\")[1:])
-        elif "/":
-            path = "/".join(path.split("/")[1:])
+            path = "/".join(path.split("\\"))
+
+        lenpath = len(path.split("/"))
+
+        if lenpath == lenroot:
+            path = ""
+        else:
+            path = "/".join(path.split("/")[lenroot-lenpath:])
 
         for file in files:
             if path != "":
@@ -55,11 +69,6 @@ def pack(root, endianness, padding, outname):
     data = arc.save(padding)
 
     if not outname:
-        if root.endswith("\\"):
-            root = root[:-2]
-        elif root.endswith("/"):
-            root = root[:-1]
-
         outname = root + ".sarc"
 
     with open(outname, "wb+") as output:
@@ -86,7 +95,7 @@ def printInfo():
 
 
 def main():
-    print("SARC Packer v0.1")
+    print("SARC Packer v0.2")
     print("(C) 2017 Stella/AboodXD")
     print("Special thanks to Reggie! Next team!")
 
