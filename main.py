@@ -131,7 +131,7 @@ def main():
             dataStart = 0x100
 
     else:
-        dataStart = 0x100
+        dataStart = 0x1000
 
     if "-o" in sys.argv:
         outname = sys.argv[sys.argv.index("-o") + 1]

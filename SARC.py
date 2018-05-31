@@ -477,7 +477,7 @@ class SARC_Archive(FileArchive):
 
         # Determine the Beginning Of Data offset
         dataStartOffset = max(
-            round_up(0x20 + SFATNodesTableLen + 0x08 + len(fileNamesTable), 0x100),
+            round_up(0x20 + SFATNodesTableLen + 0x08 + len(fileNamesTable), 0x1000),
             round_up(dataStartOffset, 0x10),
         )
 
