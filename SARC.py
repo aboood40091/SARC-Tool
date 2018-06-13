@@ -476,10 +476,17 @@ class SARC_Archive(FileArchive):
             return ((x - 1) | (y - 1)) + 1
 
         # Determine the Beginning Of Data offset
+        dataStartOffset_ = round_up(0x20 + SFATNodesTableLen + 0x08 + len(fileNamesTable), 0x10)
+
         dataStartOffset = max(
-            round_up(0x20 + SFATNodesTableLen + 0x08 + len(fileNamesTable), 0x1000),
+            dataStartOffset_,
             round_up(dataStartOffset, 0x10),
         )
+
+        if dataStartOffset == dataStartOffset_:
+            dataStartOffset = round_up(dataStartOffset, 0x200)  # Align by 0x200 to not break textures
+
+        del dataStartOffset_
 
         # Get the alignment from the beginning of data offset
         alignment = dataStartOffset & 0xF0

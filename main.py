@@ -117,7 +117,7 @@ def main():
     if not os.path.isdir(root):
         printInfo()
 
-    if "-bom" in sys.argv:
+    if "-little" in sys.argv:
         endianness = '<'
 
     else:
