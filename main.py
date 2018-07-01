@@ -108,7 +108,7 @@ def extract(file):
                 out.write(fileData)
 
 
-def pack(root, endianness, dataStartOffset, level, outname):
+def pack(root, endianness, level, outname):
     """
     Pack the files and folders in the root folder.
     """
@@ -168,7 +168,7 @@ def pack(root, endianness, dataStartOffset, level, outname):
             else:
                 exec("folder%m.addFile(SarcLib.File(file, inb, hasFilename))".replace('%m', str(i - 1)))
 
-    data, maxAlignment = arc.save(dataStartOffset)
+    data, maxAlignment = arc.save()
 
     if level != -1:
         outData = libyaz0.compress(data, maxAlignment, level)
@@ -213,18 +213,10 @@ def main():
 
     elif os.path.isdir(root):
         endianness = '>'
-        dataStartOffset = 0
         level = -1
 
         if "-little" in sys.argv:
             endianness = '<'
-
-        if "-dataStart" in sys.argv:
-            try:
-                dataStartOffset = int(sys.argv[sys.argv.index("-dataStart") + 1], 0)
-
-            except ValueError:
-                pass
 
         if "-compress" in sys.argv:
             try:
@@ -245,7 +237,7 @@ def main():
         else:
             outname = ""
 
-        pack(root, endianness, dataStartOffset, level, outname)
+        pack(root, endianness, level, outname)
 
     else:
         print("File/Folder doesn't exist!")
