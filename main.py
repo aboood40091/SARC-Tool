@@ -86,13 +86,18 @@ def extract(file):
         files = []
 
         def getAbsPath(folder, path):
+            nonlocal root
             nonlocal files
 
-            for checkObj in folder:
+            for checkObj in folder.contents:
                 if isinstance(checkObj, SarcLib.File):
                     files.append(["/".join([path, checkObj.name]), checkObj.data])
 
                 else:
+                    path_ = os.path.join(root, "/".join([path, checkObj.name]))
+                    if not os.path.isdir(path_):
+                        os.mkdir(path_)
+
                     getAbsPath(checkObj, "/".join([path, checkObj.name]))
 
         for checkObj in arc.contents:
@@ -100,6 +105,10 @@ def extract(file):
                 files.append([checkObj.name, checkObj.data])
 
             else:
+                path = os.path.join(root, checkObj.name)
+                if not os.path.isdir(path):
+                    os.mkdir(path)
+
                 getAbsPath(checkObj, checkObj.name)
 
         for file, fileData in files:
