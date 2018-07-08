@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # SARC Tool
-# Version v0.3
+# Version v0.4
 # Copyright © 2017-2018 MasterVermilli0n / AboodXD
 
 # This is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ except ImportError:
     ans = input("Do you want to install it now? (y/n)\t")
     if ans.lower() == 'y':
         import pip
-        pip.main(['install', 'SarcLib==0.1'])
+        pip.main(['install', 'SarcLib==0.2'])
         del pip
 
         import SarcLib
@@ -79,7 +79,7 @@ def extract(file):
         arc = SarcLib.SARC_Archive()
         arc.load(inb)
 
-        root = os.path.join(os.path.dirname(os.path.abspath(file)), name)
+        root = os.path.join(os.path.dirname(file), name)
         if not os.path.isdir(root):
             os.mkdir(root)
 
@@ -210,13 +210,13 @@ def printInfo():
 
 
 def main():
-    print("SARC Tool v0.3")
+    print("SARC Tool v0.4")
     print("(C) 2017-2018 MasterVermilli0n / AboodXD\n")
 
     if len(sys.argv) < 2:
         printInfo()
 
-    root = sys.argv[-1]
+    root = os.path.abspath(sys.argv[-1])
     if os.path.isfile(root):
         extract(root)
 
