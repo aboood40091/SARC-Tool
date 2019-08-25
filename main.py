@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 # SARC Tool
-# Version v0.4
-# Copyright © 2017-2018 MasterVermilli0n / AboodXD
+# Version v0.5
+# Copyright © 2017-2019 MasterVermilli0n / AboodXD
 
 # This is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ except ImportError:
     ans = input("Do you want to install it now? (y/n)\t")
     if ans.lower() == 'y':
         import pip
-        pip.main(['install', 'SarcLib==0.2'])
+        pip.main(['install', 'SarcLib==0.3'])
         del pip
 
         import SarcLib
@@ -200,7 +200,7 @@ def printInfo():
     print("  main [option...] file/folder")
     print("\nPacking Options:")
     print(" -o <output>           output file name (Optional)")
-    print(" -little               output will be in little endian if this is used")
+    print(" -little (or -l)       output will be in little endian if this is used")
     print(" -compress <level>     Yaz0 (SZS) compress the output with the specified level(0-9) (1 is the default)")
     print("                       0: No compression (Fastest)")
     print("                       9: Best compression (Slowest)")
@@ -210,8 +210,8 @@ def printInfo():
 
 
 def main():
-    print("SARC Tool v0.4")
-    print("(C) 2017-2018 MasterVermilli0n / AboodXD\n")
+    print("SARC Tool v0.5")
+    print("(C) 2017-2019 MasterVermilli0n / AboodXD\n")
 
     if len(sys.argv) < 2:
         printInfo()
@@ -224,7 +224,7 @@ def main():
         endianness = '>'
         level = -1
 
-        if "-little" in sys.argv:
+        if "-little" in sys.argv or "-l" in sys.argv:
             endianness = '<'
 
         if "-compress" in sys.argv:
